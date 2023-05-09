@@ -1,2 +1,2 @@
-import { useScrollLock } from "./use-scroll-lock"
+import { useScrollLock } from './use-scroll-lock'
 export { useScrollLock }

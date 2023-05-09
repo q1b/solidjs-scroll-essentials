@@ -1,14 +1,14 @@
-import { createSignal, mergeProps, onMount } from "solid-js"
-import { useReducedMotion } from "../use-reduced-motion"
-import { useWindowEvent } from "../use-window-event"
-import { easeInOutQuad } from "./utils/ease-in-out-quad"
-import { getRelativePosition } from "./utils/get-relative-position"
-import { getScrollStart } from "./utils/get-scroll-start"
-import { setScrollParam } from "./utils/set-scroll-param"
+import { createSignal, mergeProps, onMount } from 'solid-js'
+import { useReducedMotion } from '../use-reduced-motion'
+import { useWindowEvent } from '../use-window-event'
+import { easeInOutQuad } from './utils/ease-in-out-quad'
+import { getRelativePosition } from './utils/get-relative-position'
+import { getScrollStart } from './utils/get-scroll-start'
+import { setScrollParam } from './utils/set-scroll-param'
 
 interface ScrollIntoViewAnimation {
   /** target element alignment relatively to parent based on current axis */
-  alignment?: "start" | "end" | "center"
+  alignment?: 'start' | 'end' | 'center'
 }
 
 interface ScrollIntoViewParams {
@@ -19,7 +19,7 @@ interface ScrollIntoViewParams {
   duration?: number
 
   /** axis of scroll */
-  axis?: "x" | "y"
+  axis?: 'x' | 'y'
 
   /** custom mathematical easing function */
   easing?: (t: number) => number
@@ -36,25 +36,25 @@ interface ScrollIntoViewParams {
 
 export function useScrollIntoView<
   Target extends HTMLElement,
-  Parent extends HTMLElement | null = null
+  Parent extends HTMLElement | null = null,
 >(props: ScrollIntoViewParams = {}) {
   const merged = mergeProps(
     {
       duration: 1250,
-      axis: "y",
+      axis: 'y',
       easing: easeInOutQuad,
       offset: 0,
       cancelable: true,
       isList: false,
     } as const,
-    props
+    props,
   )
   const [frameID, setFrameID] = createSignal(0)
   const [startTime, setStartTime] = createSignal(0)
   const [shouldStop, setShouldStop] = createSignal(false)
 
-  const [scrollableRef, setScrollableRef] = createSignal<Parent>(null)
-  const [targetRef, setTargetRef] = createSignal<Target>(null)
+  const [scrollableRef, setScrollableRef] = createSignal<Parent>()
+  const [targetRef, setTargetRef] = createSignal<Target>()
 
   const reducedMotion = useReducedMotion()
 
@@ -64,10 +64,8 @@ export function useScrollIntoView<
     }
   }
 
-  const scrollIntoView = ({
-    alignment = "start",
-  }: ScrollIntoViewAnimation = {}) => {
-    console.log("Running")
+  const scrollIntoView = ({ alignment = 'start' }: ScrollIntoViewAnimation = {}) => {
+    console.log('Running')
 
     setShouldStop(false)
 
@@ -75,10 +73,9 @@ export function useScrollIntoView<
       cancel()
     }
 
-    const start =
-      getScrollStart({ parent: scrollableRef(), axis: merged.axis }) ?? 0
+    const start = getScrollStart({ parent: scrollableRef(), axis: merged.axis }) ?? 0
 
-    console.log("Start pos", start)
+    console.log('Start pos', start)
 
     const change =
       getRelativePosition({
@@ -89,7 +86,7 @@ export function useScrollIntoView<
         offset: merged.offset,
         isList: merged.isList,
       }) - (scrollableRef() ? 0 : start)
-    console.log("Change", change)
+    console.log('Change', change)
     function animateScroll() {
       if (startTime() === 0) {
         setStartTime(performance.now())
@@ -99,14 +96,11 @@ export function useScrollIntoView<
       const elapsed = now - startTime()
 
       // easing timing progress
-      const t =
-        reducedMotion || merged.duration === 0
-          ? 1
-          : elapsed / merged.duration
+      const t = reducedMotion || merged.duration === 0 ? 1 : elapsed / merged.duration
 
       const distance = start + change * merged.easing(t)
 
-      console.log("T", t, "D", distance)
+      console.log('T', t, 'D', distance)
 
       setScrollParam({
         parent: scrollableRef(),
@@ -117,8 +111,7 @@ export function useScrollIntoView<
       if (!shouldStop() && t < 1) {
         setFrameID(requestAnimationFrame(animateScroll))
       } else {
-        typeof merged.onScrollFinish === "function" &&
-          merged.onScrollFinish()
+        typeof merged.onScrollFinish === 'function' && merged.onScrollFinish()
         setStartTime(0)
         setFrameID(0)
         cancel()
@@ -139,11 +132,11 @@ export function useScrollIntoView<
    * touchmove - any touchable device
    */
 
-  useWindowEvent("wheel", handleStop, {
+  useWindowEvent('wheel', handleStop, {
     passive: true,
   })
 
-  useWindowEvent("touchmove", handleStop, {
+  useWindowEvent('touchmove', handleStop, {
     passive: true,
   })
 
