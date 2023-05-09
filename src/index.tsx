@@ -1,24 +1,6 @@
-import { Accessor, Component, createComputed, createSignal } from 'solid-js'
+import { useScrollLock } from "./hooks/use-scroll-lock"
+import { useScrollIntoView } from "./hooks/use-scroll-into-view"
+import { useWindowScroll } from "./hooks/use-window-scroll"
+import { useScrollPosition } from "./hooks/use-scroll-position"
 
-export function createHello(): [Accessor<string>, (to: string) => void] {
-  const [hello, setHello] = createSignal('Hello World!')
-
-  return [hello, (to: string) => setHello(`Hello ${to}!`)]
-}
-
-export const Hello: Component<{ to?: string }> = props => {
-  const [hello, setHello] = createHello()
-
-  // This will only log during development, console is removed in production
-  console.log('Hello World!')
-
-  createComputed(() => {
-    if (typeof props.to === 'string') setHello(props.to)
-  })
-
-  return (
-    <>
-      <div>{hello()}</div>
-    </>
-  )
-}
+export { useScrollLock, useScrollIntoView, useScrollPosition, useWindowScroll }
