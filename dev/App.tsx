@@ -1,16 +1,19 @@
-import type { Component } from 'solid-js'
-import logo from './logo.svg'
-import styles from './App.module.css'
-import { Hello } from '../src'
+import { onMount, type Component } from 'solid-js';
+import logo from './logo.svg';
+import styles from './App.module.css';
+import { useScrollIntoView, useScrollPosition } from "../src"
 
 const App: Component = () => {
+  const { scrollIntoView, setTargetRef } = useScrollIntoView<HTMLDivElement>({
+    offset: 60,
+  });
+
+  const { x,y } = useScrollPosition();
   return (
     <div class={styles.App}>
+      <div style={{position:'fixed', top: '10px', left:'10px', padding:'5px', background: 'cyan', color:'black'} } >{y()}</div>
       <header class={styles.header}>
         <img src={logo} class={styles.logo} alt="logo" />
-        <h1>
-          <Hello></Hello>
-        </h1>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -22,9 +25,16 @@ const App: Component = () => {
         >
           Learn Solid
         </a>
+        <button onClick={() => scrollIntoView()}> Scroll into View </button>
       </header>
+      <main>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque illo tempora iste magni quisquam minus reprehenderit accusantium, iusto ullam earum laborum corrupti velit quasi. Architecto odit voluptas unde necessitatibus impedit quia beatae qui! Cumque laudantium adipisci cum ea itaque fugit.
+        <br />
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, non deserunt! Ab recusandae facere voluptate in. Ab facilis dolore eos quidem, error nostrum a tenetur aspernatur mollitia! Odit libero earum enim quasi sapiente ratione exercitationem vel consectetur dolorum, obcaecati a? Eveniet fugit ipsum eos fugiat provident quas, labore corporis. Hic delectus mollitia natus animi aliquid harum, odit libero possimus unde, quae rem excepturi amet quas voluptate, maiores ad numquam. Consequuntur quibusdam ipsa dolor autem qui repellendus, cumque numquam praesentium amet. Temporibus velit officia nemo dicta tempore quo porro quia magnam illo voluptatum sapiente nihil consequuntur rem corrupti aspernatur itaque quae dolore culpa fugiat omnis unde odio, error labore dolorum. Unde, recusandae tempore amet minima itaque, dolore explicabo corporis excepturi eos veniam eveniet inventore omnis possimus incidunt. Ex aliquam iure dignissimos dolore deserunt rem eius accusamus, in facere sit nemo. Accusamus officia voluptatem molestiae fuga omnis magni dignissimos quas, repellendus maxime nihil excepturi dolor ea libero debitis laborum enim veritatis vel autem, exercitationem vitae. Vero, molestias veritatis? Quod dicta distinctio sequi molestiae quo! Nihil sint eligendi quae adipisci, fugit quasi expedita alias cumque labore temporibus a officiis eius! Ipsum porro ipsam tempore et quod mollitia ex in reiciendis accusamus, ducimus eveniet quae totam fuga optio minima qui temporibus. Excepturi, suscipit ullam quos nam quae asperiores provident eveniet hic ea obcaecati, illum sint, corrupti veniam officiis nisi culpa repellat rem nostrum itaque adipisci officia tempore vel praesentium. Commodi ratione molestias possimus alias. Odit non molestias suscipit tempora blanditiis inventore dolorum nihil asperiores facilis ut quisquam hic possimus voluptatibus architecto, ipsa deleniti expedita eos illum! Molestiae architecto cupiditate illum culpa rerum ducimus aperiam modi odit voluptatum, atque delectus temporibus eius error quaerat cumque nisi ipsam exercitationem nihil, obcaecati ut labore perferendis officia. Inventore veniam omnis expedita, voluptate id corporis magni similique dolore neque quas? Labore omnis officiis explicabo sunt earum, eligendi, dicta tempora odit perspiciatis reiciendis ducimus quis rerum aut deserunt incidunt at, blanditiis saepe repellat molestias soluta culpa repudiandae et asperiores tenetur. Quaerat quasi hic accusamus esse. Asperiores incidunt, quidem accusamus consequatur, voluptates corporis unde vero sint ipsa quibusdam nemo, voluptatem iste? Eos, earum mollitia, magnam optio facere ex consequuntur iure sapiente ullam voluptates provident tempore culpa voluptatum assumenda consectetur tempora atque consequatur recusandae esse illo corporis minus. Placeat animi repudiandae tenetur voluptatem dignissimos, repellendus ea, dolores at odio reprehenderit nobis in? Culpa placeat recusandae, perspiciatis accusantium obcaecati iure incidunt eos, odio nulla sequi, labore tempore vel accusamus esse! Repudiandae assumenda voluptates nam atque quasi, ipsum numquam excepturi autem praesentium quidem natus ex dignissimos repellat inventore maxime quia laborum repellendus illo perferendis reiciendis ipsa dolores. Optio vitae perferendis ullam quam enim voluptatibus dignissimos rerum commodi? Omnis quos odio cumque aliquam commodi ratione ipsum autem sit repellat, et magnam necessitatibus tenetur iure, voluptatem perferendis minus vero! Voluptates tempora ut minus fugiat voluptatum. Adipisci beatae numquam eos suscipit tempora natus quae vero veritatis voluptas! Quos aut quas error dolorum eos tempore magnam dolor corrupti molestias, nihil, nobis optio amet fugit eius quam at ipsa veritatis non eaque aliquid dolorem voluptates? Sint iure incidunt obcaecati reiciendis, perferendis eius perspiciatis culpa molestias unde voluptatibus? Corporis ad quia reiciendis inventore, aperiam sed expedita. Quia in sunt praesentium cum expedita minus ab a quaerat corrupti quo, quas harum soluta. Illum repellat ad temporibus dicta amet in fugiat quidem dolorem rem autem aspernatur quos saepe quia laborum asperiores, laudantium ipsum fugit. Repudiandae, similique? Quibusdam quaerat aspernatur quos numquam, in aperiam voluptate quidem quas perspiciatis perferendis debitis temporibus laudantium reiciendis nobis error sint velit quis. At tenetur est eveniet enim placeat debitis sunt expedita soluta vel illum! Quaerat eaque nobis corrupti exercitationem ad quod commodi maxime unde, hic a voluptates deserunt in soluta pariatur nisi incidunt repellat dolorem aliquid id laudantium nihil fuga cum earum veniam. Maiores suscipit facere odit similique aperiam? Qui, omnis ea rem dolore quia, veniam ab nihil in aut eum unde ad eligendi blanditiis aperiam! Ea voluptas et amet, aliquid non rem accusantium iure beatae sint porro nobis doloribus omnis atque recusandae magni quae repudiandae saepe, consectetur fuga minima! Ratione cumque, quam cupiditate omnis animi optio obcaecati accusantium, vitae quos, ad necessitatibus minima tempore porro? Eveniet id debitis voluptates reiciendis provident, voluptate hic vero non nihil quis maxime minima soluta quasi dignissimos rem asperiores. Distinctio, cumque. Tenetur magni officia a autem blanditiis voluptate, quidem maiores porro officiis doloribus doloremque odit tempore, laborum enim. Iusto dolorem eveniet laudantium enim adipisci molestiae perspiciatis molestias ipsa impedit placeat ad consequatur quod tenetur dicta quidem ipsum corporis, labore in vitae tempore magni ea. Assumenda amet obcaecati voluptas nostrum? Alias obcaecati a, impedit error asperiores ullam id? Laudantium nam labore reiciendis dolorem, voluptatum officiis impedit sit ab exercitationem ipsa et veniam obcaecati fuga beatae magnam animi iure delectus iusto consectetur aspernatur inventore ipsam reprehenderit dicta. Voluptas rerum enim similique ullam molestiae totam nobis odit? Architecto molestias obcaecati provident ullam molestiae qui. Commodi, laborum quod aliquid nobis repellat dolorem molestias possimus enim rerum? Aperiam adipisci dolorum amet aspernatur. Fugit sit exercitationem iure vel, minima laborum. Blanditiis voluptatum incidunt quae iusto itaque! Eveniet doloribus, excepturi repellat amet, quos laudantium dolorum in pariatur illo sit obcaecati veritatis modi beatae eum. Dicta ea, temporibus libero quo ullam molestiae quidem earum natus dolorum quis. Necessitatibus commodi voluptatibus tempore eveniet odit fugit dicta molestias? Facilis veniam voluptas nemo autem laudantium temporibus ipsum eum excepturi velit, nihil soluta praesentium fugit aliquid, debitis itaque molestias sunt enim, incidunt suscipit.
+      </main>
+      <div ref={(ref) => setTargetRef(ref)} style={{ padding: '100px', background: '#000' }} > I am the Target REF </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

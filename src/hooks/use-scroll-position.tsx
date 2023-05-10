@@ -1,23 +1,24 @@
-import { createEffect, createSignal, onCleanup } from 'solid-js'
+import { createSignal, onCleanup, onMount } from 'solid-js'
 import { throttle } from '@solid-primitives/scheduled'
 
 export const useScrollPosition = (throttleBy = 500) => {
-  const [scrollPosition, setScrollPosition] = createSignal<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  })
+  const [scrollPositionX, setScrollPositionX] = createSignal<number>(0)
+  const [scrollPositionY, setScrollPositionY] = createSignal<number>(0)
 
   const handleScroll = throttle(
-    () => setScrollPosition({ x: window.scrollX, y: window.scrollY }),
+    () => {
+      setScrollPositionX(window.scrollX)
+      setScrollPositionY(window.scrollY)
+    },
     throttleBy,
   )
 
-  createEffect(() => {
+  onMount(() => {
     window.addEventListener('scroll', handleScroll)
     onCleanup(() => window.removeEventListener('scroll', handleScroll))
-  }, [handleScroll])
+  })
 
-  return scrollPosition
+  return { x: scrollPositionX, y: scrollPositionY }
 }
 
 export default useScrollPosition
